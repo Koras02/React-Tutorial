@@ -4,33 +4,57 @@ import './index.css';
 // import App from './App';
 import reportWebVitals from './reportWebVitals';
 
-function getGreeting(user){
-  if(user) {
-    return <h1>Hello {formatName(user)}!</h1>
+function FormattedDate(props) {
+  return <h2>It is {props.date.toLocaleTimeString()}</h2>
+}
+
+class Clock extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {date: new Date()};
   }
-  return <h1>Hello, Stranger.</h1>
+
+  componentDidMount(){
+    this.timerID = setInterval(
+      () => this.tick(),
+      1000
+    );
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.timerID);
+  }
+   
+  tick() {
+    this.setState({
+      date: new Date()
+    });
+  }
+
+  render() {
+    return (
+      <div>
+        <h1>Hello, world!</h1>
+        <FormattedDate date={this.state.date} />
+      </div>
+    );
+  }
 }
-
-function formatName(user) {
-  return user.firstName + ' ' + user.lastName; 
+ 
+function App() {
+  return (
+    <div>
+      <Clock />
+      <Clock />
+      <Clock />
+    </div>
+  )
 }
-
-const user = {
-  firstName: 'Harper',
-  lastName: 'Perez'
-}
-
-const element = (
-   <h1>
-     Hello, {getGreeting(user)}
-     Hello, {formatName(user)}!
-    </h1>
-);
-
 ReactDOM.render(
-  element,
+  <App />,
   document.getElementById('root')
 );
+
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
