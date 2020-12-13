@@ -1,62 +1,42 @@
+import { render } from '@testing-library/react';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 // import App from './App';
-import reportWebVitals from './reportWebVitals';
+ 
+ 
+// class Toggle extends React.Component {
+//   constructor(props) {
+//     super(props);
+//     this.state = {isToggleOn: true};
 
-function FormattedDate(props) {
-  return <h2>It is {props.date.toLocaleTimeString()}</h2>
-}
+//     // This binding is necessary to make `this` work in the callback
+//     this.handleClick = this.handleClick.bind(this);
+//   }
 
-class Clock extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {date: new Date()};
-  }
+//   handleClick() {
+//     this.setState(prevState => ({
+//       isToggleOn: !prevState.isToggleOn
+//     }));
+//   }
 
-  componentDidMount(){
-    this.timerID = setInterval(
-      () => this.tick(),
-      1000
-    );
-  }
-
-  componentWillUnmount() {
-    clearInterval(this.timerID);
-  }
-   
-  tick() {
-    this.setState({
-      date: new Date()
-    });
+class LoggingButton extends React.Component {
+  handleClick(){
+    console.log('this is:', this);
   }
 
   render() {
     return (
-      <div>
-        <h1>Hello, world!</h1>
-        <FormattedDate date={this.state.date} />
-      </div>
+      <button onClick={this.handleClick}>
+        {/* {this.state.isToggleOn ? 'ON' : 'OFF'} */}
+        Click me
+      </button>
+     
     );
   }
 }
- 
-function App() {
-  return (
-    <div>
-      <Clock />
-      <Clock />
-      <Clock />
-    </div>
-  )
-}
+
 ReactDOM.render(
-  <App />,
+  <LoggingButton />,
   document.getElementById('root')
 );
-
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
