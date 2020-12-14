@@ -3,40 +3,45 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 // import App from './App';
- 
- 
-// class Toggle extends React.Component {
-//   constructor(props) {
-//     super(props);
-//     this.state = {isToggleOn: true};
+  
+function WarningBanner(props) {
+  if (!props.warn) {
+    return null;
+  }
 
-//     // This binding is necessary to make `this` work in the callback
-//     this.handleClick = this.handleClick.bind(this);
-//   }
 
-//   handleClick() {
-//     this.setState(prevState => ({
-//       isToggleOn: !prevState.isToggleOn
-//     }));
-//   }
+return (
+  <div className="wraning">
+    Warning!
+  </div>
+  );
+}
+class Page extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {showWarning: true}
+    this.handleToggleClick = this.handleToggleClick.bind(this);
+  }
 
-class LoggingButton extends React.Component {
-  handleClick(){
-    console.log('this is:', this);
+  handleToggleClick() {
+    this.setState(prevState => ({
+      showWarning: !prevState.showWarning
+    }));
   }
 
   render() {
     return (
-      <button onClick={this.handleClick}>
-        {/* {this.state.isToggleOn ? 'ON' : 'OFF'} */}
-        Click me
-      </button>
-     
+      <div>
+        <WarningBanner warn={this.state.showWarning} />
+        <button onClick={this.handleToggleClick}>
+        {this.state.showWarning ? 'Hide' : 'Show'}
+        </button>
+      </div>
     );
   }
 }
 
 ReactDOM.render(
-  <LoggingButton />,
+  <Page />,
   document.getElementById('root')
-);
+)
